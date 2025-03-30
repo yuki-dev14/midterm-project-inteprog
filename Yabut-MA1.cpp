@@ -11,6 +11,7 @@ using namespace std;
 #define RED     "\033[31m"
 #define GREEN "\033[32m"
 	
+
 	//CLASS BOOK
 class Book {
 private:
@@ -48,14 +49,15 @@ public:
 		         << "| " << setw(12) << left << category
 		         << " |" << endl;
 		}
-	    void editBook(string _isbn, string _title, string _author, string _edition, string _publication) {
-	        isbn = _isbn;
-	        title = _title;
-	        author = _author;
-	        edition = _edition;
-	        publication = _publication;
-	    }
-	};
+		 void editBook(string _isbn, string _title, string _author, string _edition, string _publication, string _category) {
+		        isbn = _isbn;
+		        title = _title;
+		        author = _author;
+		        edition = _edition;
+		        publication = _publication;
+		        category = _category;
+		    }
+		};
 	
 	bool isValidId(const string &id) 
 	{
@@ -245,7 +247,7 @@ public:
 	        if (books[i].getId() == id) {
 	            found = true;  
 	
-	            string isbn, title, author, edition, publication;
+	            string isbn, title, author, edition, publication, category;
 	
 	            // ISBN Validation
 	            do {
@@ -286,9 +288,20 @@ public:
 	                    cout << RED << "Invalid publication! Only letters and spaces are allowed.\n" << RESET;
 	                }
 	            } while (!isValidPublication(publication));
-	
-	            books[i].editBook(isbn, title, author, edition, publication);
+	            
+	            // Category Validation
+	            do {
+	                cout << "Enter new Category: ";
+	                getline(cin, category);
+	                if (!isValidCategory(category)) {
+	                    cout << RED << "Invalid Category! Only Fiction and Non-Fiction are allowed.\n" << RESET;
+	                }
+	            } while (!isValidCategory(category));
+	            
+	        	books[i].editBook(isbn, title, author, edition, publication, category);
+
 	            cout << GREEN << "Book edited successfully!\n" << RESET;
+	            
 	            break;  
 	        }
 	    }
@@ -601,4 +614,3 @@ void searchBook()
 	    } while (choice != 7);
 	    return 0;
 	}
-	
